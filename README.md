@@ -33,3 +33,5 @@ npm run migration:run
 ```bash
 npm run start:dev
 ```
+
+>[Download Post Man Collection to Test](https://github.com/dhananjaysr26/leads-manager/blob/main/__DOCS/Leads-Manager.postman_collection.json)
