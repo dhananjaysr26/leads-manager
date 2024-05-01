@@ -29,14 +29,14 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ) {
     const { secretToken, user } = await this.authService.signInUser(body);
-    // console.log({ secretToken, user });
+    console.log({ secretToken, user });
 
     res.cookie('auth-cookie', secretToken, {
       httpOnly: true,
       sameSite: 'none',
       secure: true,
     });
-    return user;
+    return { userInfo: user, token: secretToken };
   }
 
   @Get(AuthConst.CheckAuth)
