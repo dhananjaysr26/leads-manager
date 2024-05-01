@@ -5,7 +5,7 @@
 To start the project
 1. Create .dev.env file to the root Directory
 >.env example
-
+>Create Database name with "leads_manager"
 ```bash
 PORT=4000
 
