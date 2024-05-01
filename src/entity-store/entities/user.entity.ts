@@ -8,8 +8,8 @@ import {
 } from 'typeorm';
 
 export enum UserRole {
-  ADMIN = 'admin',
-  USER = 'user',
+  MAKER = 'maker',
+  CHECKER = 'checker',
 }
 
 @Entity('users')
@@ -29,8 +29,13 @@ export class User {
   @Column({ length: 20, nullable: false })
   contactNumber: string;
 
-  @Column({ length: 20, nullable: false })
-  userRole: string;
+  @Column({
+    type: 'enum',
+    enum: UserRole,
+    default: UserRole.MAKER,
+    nullable: false,
+  })
+  userRole: UserRole;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
