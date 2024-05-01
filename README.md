@@ -3,9 +3,11 @@
 
 
 To start the project
+
+>Create Database name with "leads_manager"
+
 1. Create .dev.env file to the root Directory
 >.env example
->Create Database name with "leads_manager"
 ```bash
 PORT=4000
 
