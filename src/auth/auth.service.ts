@@ -18,16 +18,6 @@ export class AuthService {
 
   async signupUser(payload: CreateUserDto) {
     const { contactNumber, username } = payload;
-    const user = await this.userService.getUserByUserDetails({
-      contactNumber,
-    });
-    // console.log({ payload, user });
-    if (user) {
-      throw new BadRequestException(
-        `User already exist with this phone Number: ${contactNumber}`,
-      );
-    }
-
     const userWithUserName = await this.userService.getUserByUserDetails({
       username,
     });
@@ -36,29 +26,37 @@ export class AuthService {
         `User already exist with this userName: ${username}`,
       );
     }
+    const userWithPhoneNumber = await this.userService.getUserByUserDetails({
+      contactNumber,
+    });
+    // console.log({ payload, user });
+    if (userWithPhoneNumber) {
+      throw new BadRequestException(
+        `User already exist with this phone Number: ${contactNumber}`,
+      );
+    }
     return this.userService.createUser(payload);
   }
 
   async signInUser({ password, username }: SignInUserDto) {
-    const { password: userPassword, ...user } =
-      await this.userService.getUserByUserDetails({
-        username,
-      });
-
+    const user = await this.userService.getUserByUserDetails({
+      username,
+    });
     if (!user) {
-      throw new NotFoundException(
-        `User Not Found with phone Number: ${username}`,
-      );
+      throw new NotFoundException(`User Not Found with UserName: ${username}`);
     }
+    const { password: userPassword, ...restUserDetails } = user;
 
     if (userPassword !== password) {
       throw new ForbiddenException(`Invalid User Credentials!`);
     }
-    const secretToken = this.jwtService.sign(user);
-    return { user, secretToken };
+
+    const secretToken = this.jwtService.sign(restUserDetails);
+    return { user: restUserDetails, secretToken };
   }
 
   async getAuthUserData(id: number) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...user } = await this.userService.getUserByUserDetails({
       userId: id,
     });

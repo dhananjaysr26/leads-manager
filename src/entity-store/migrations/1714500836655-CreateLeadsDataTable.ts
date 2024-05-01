@@ -48,6 +48,7 @@ export class Migrations1714500836655 implements MigrationInterface {
             name: 'status',
             type: 'varchar(50)',
             isNullable: false,
+            default: "'generated'",
           },
           {
             name: 'generated_by',

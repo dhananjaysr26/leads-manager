@@ -43,11 +43,11 @@ export class Lead_Data {
   })
   status: LeadsStatus;
 
-  @Column()
-  @ManyToOne(() => User, (user) => user.userId)
-  @JoinColumn({ name: 'generated_by' })
-  generated_by: User;
+  @Column({ type: 'int' })
+  generated_by: number;
 
+  @ManyToOne(() => User, (user) => user.userId)
+  @JoinColumn({ name: 'generated_by', referencedColumnName: 'userId' })
   @CreateDateColumn()
   created_at: Date;
 
@@ -57,3 +57,10 @@ export class Lead_Data {
   @DeleteDateColumn()
   deleted_at: Date;
 }
+
+// @Column({ type: 'int' })
+// eventId: number;
+
+// @ManyToOne(() => Event, (event) => event.id)
+// @JoinColumn({ name: 'eventId', referencedColumnName: 'id' })
+// event: Event;
