@@ -33,8 +33,3 @@ npm run migration:run
 ```bash
 npm run start:dev
 ```
-## useFull commands
-```bash
-npm start -- --reset-cache
-adb devices
-```
